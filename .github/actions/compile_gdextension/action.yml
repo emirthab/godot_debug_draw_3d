@@ -119,6 +119,10 @@ runs:
           found_files=$(find -L ${{inputs.output_libs_path}} -type f -exec file {} + | grep "Mach-O universal" | cut -d: -f1)
           echo "Found files: $found_files"
           strip -u $found_files
+        elif [ "${{inputs.platform}}" == 'ios' ]; then
+          found_files=$(find -L ${{inputs.output_libs_path}} -type f -exec file {} + | grep ".dylib" | cut -d: -f1)
+          echo "Found files: $found_files"
+          strip $found_files
         else
           found_files=$(find -L ${{inputs.output_libs_path}} -type f -exec file {} + | grep "ELF" | cut -d: -f1)
           echo "Found files: $found_files"
