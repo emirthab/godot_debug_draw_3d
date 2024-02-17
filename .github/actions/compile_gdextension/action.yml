@@ -115,7 +115,7 @@ runs:
       if: runner.os != 'Windows' && inputs.platform != 'android' && inputs.platform != 'web'
       shell: bash
       run: |
-        if [ inputs.platform == 'macos' ]; then
+        if [ "${{inputs.platform}}" == 'macos' ]; then
           found_files=$(find -L ${{inputs.output_libs_path}} -type f -exec file {} + | grep "Mach-O universal" | cut -d: -f1)
           echo "Found files: $found_files"
           strip -u $found_files
